@@ -27,8 +27,8 @@ import { BarChart2, Users, FileText, ShoppingBag, Image, Grid, MessageSquare, Se
 export default function Sidebar() {
   const navigate=useNavigate();
   const navItems = [
-    { icon: BarChart2, label: "Genel Bakış", active: true },
-    { icon: Users, label: "Kullanıcılar" },
+    { icon: BarChart2, label: "Genel Bakış", active: true ,path:"/" },
+    { icon: Users, label: "Kullanıcılar", path: "/users"},
     { icon: FileText, label: "Sayfalar" },
     { icon: ShoppingBag, label: "Ürünler" },
     { icon: Image, label: "Galeri" },
