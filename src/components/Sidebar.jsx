@@ -21,7 +21,8 @@
 // }
 
 import { Nav } from "react-bootstrap";
-import { BarChart2, Users, FileText, ShoppingBag, Image, Grid, MessageSquare, Settings, Globe } from "lucide-react";
+import { useNavigate} from "react-router-dom";
+import { BarChart2, Users, FileText, ShoppingBag, Image, Grid, MessageSquare, Settings, Globe, Menu,Accessibility } from "lucide-react";
 
 export default function Sidebar() {
   const navItems = [
@@ -30,8 +31,8 @@ export default function Sidebar() {
     { icon: FileText, label: "Sayfalar" },
     { icon: ShoppingBag, label: "Ürünler" },
     { icon: Image, label: "Galeri" },
-    { icon: Grid, label: "Kategoriler" },
-    { icon: MessageSquare, label: "Blog / Haber / Duyuru" },
+    { icon: Menu, label: "Menü" },
+    { icon: Accessibility, label: "Kategoriler" },
     { icon: Settings, label: "Site Ayarları" },
   ];
 
@@ -40,7 +41,14 @@ export default function Sidebar() {
       className="d-flex flex-column p-3 bg-light border-end"
       style={{ width: 250, height: "100vh", overflowY: "auto" }}
     >
-      <span className="fs-5 fw-bold mb-4">HR Management</span>
+      <div className="d-flex align-items-center">
+      <div className="rounded-circle bg-secondary me-3" style={{ width: 40, height: 40 }}></div>
+      <div >
+        <div className="fw-bold">Company Name</div>
+        <div className="text-muted small">HR Management</div>
+      </div>
+    </div>
+    <hr className="my-2" />
       <Nav className="flex-column align-items-start">
         {navItems.map((item, idx) => (
           <Nav.Link

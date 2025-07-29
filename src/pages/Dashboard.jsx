@@ -29,9 +29,13 @@ export default function Dashboard() {
           <div className="col-12">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h4>Genel Bakış</h4>
+             
               <button className="btn btn-primary">+ Yeni içerik</button>
             </div>
-
+            <div className="text-muted text-start mb-4 ">
+    Bu panelden web sitenizin durumunu hızlıca gözden geçirebilir, yeni içerikler ekleyebilir ve analizlerinizi inceleyebilirsiniz.
+  </div>
+  <hr className="my-2" />
             <div className="row g-3 mb-4">
               {stats.map((stat, idx) => (
                 <div className="col-md-3" key={idx}>
