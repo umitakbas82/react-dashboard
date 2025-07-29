@@ -25,6 +25,7 @@ import { useNavigate} from "react-router-dom";
 import { BarChart2, Users, FileText, ShoppingBag, Image, Grid, MessageSquare, Settings, Globe, Menu,Accessibility } from "lucide-react";
 
 export default function Sidebar() {
+  const navigate=useNavigate();
   const navItems = [
     { icon: BarChart2, label: "Genel Bakış", active: true },
     { icon: Users, label: "Kullanıcılar" },
