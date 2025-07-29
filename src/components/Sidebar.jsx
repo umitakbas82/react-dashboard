@@ -54,7 +54,7 @@ export default function Sidebar() {
         {navItems.map((item, idx) => (
           <Nav.Link
             key={idx}
-            href="#"
+            onClick={() => navigate(item.path)}
             className={`d-flex align-items-center w-100 text-start ${
               item.active ? "fw-bold text-primary" : "text-dark"
             }`}
