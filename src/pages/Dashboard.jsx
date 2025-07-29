@@ -23,41 +23,44 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout>
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h4>Genel Bakış</h4>
-        <button className="btn btn-primary">+ Yeni içerik</button>
-      </div>
-
-      <p className="text-muted mb-4">
-        Bu panelden web sitenizin durumunu hızlıca gözden geçirebilir, yeni içerikler ekleyebilir ve analizlerinizi inceleyebilirsiniz.
-      </p>
-
-      <div className="row g-3 mb-4">
-        {stats.map((stat, idx) => (
-          <div className="col-md-3" key={idx}>
-            <StatCard {...stat} />
-          </div>
-        ))}
-      </div>
-
-      <div className="row g-4">
-        <div className="col-md-8">
-          <div className="card shadow-sm">
-            <div className="card-header">Aylara Göre Kullanıcı Ziyaretleri</div>
-            <div className="card-body">
-              <canvas id="visitsChart" height="200"></canvas>
+    <div className="container-fluid h-100">
+        <div className="row h-100">
+          {/* Sol İçerik Alanı */}
+          <div className="col-12">
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h4>Genel Bakış</h4>
+              <button className="btn btn-primary">+ Yeni içerik</button>
             </div>
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div className="card shadow-sm">
-            <div className="card-header">Son Aktiviteler</div>
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item">Yeni içerik eklendi – 12.08.2024</li>
-              <li className="list-group-item">Bir kullanıcı giriş yaptı – 12.08.2024</li>
-              <li className="list-group-item">Yeni yorum alındı – 12.08.2024</li>
-              <li className="list-group-item">Sayfa düzenlendi – 12.08.2024</li>
-            </ul>
+
+            <div className="row g-3 mb-4">
+              {stats.map((stat, idx) => (
+                <div className="col-md-3" key={idx}>
+                  <StatCard {...stat} />
+                </div>
+              ))}
+            </div>
+
+            <div className="row g-4">
+              <div className="col-md-8">
+                <div className="card shadow-sm h-100">
+                  <div className="card-header">Aylara Göre Kullanıcı Ziyaretleri</div>
+                  <div className="card-body">
+                    <canvas id="visitsChart" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="card shadow-sm h-100">
+                  <div className="card-header">Son Aktiviteler</div>
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item">Yeni içerik eklendi – 12.08.2024</li>
+                    <li className="list-group-item">Bir kullanıcı giriş yaptı – 12.08.2024</li>
+                    <li className="list-group-item">Yeni yorum alındı – 12.08.2024</li>
+                    <li className="list-group-item">Sayfa düzenlendi – 12.08.2024</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

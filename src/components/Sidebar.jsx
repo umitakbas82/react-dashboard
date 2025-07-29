@@ -36,12 +36,21 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="d-flex flex-column flex-shrink-0 p-3 bg-light border-end" style={{ width: 250, height: '100vh' }}>
+    <div
+      className="d-flex flex-column p-3 bg-light border-end"
+      style={{ width: 250, height: "100vh", overflowY: "auto" }}
+    >
       <span className="fs-5 fw-bold mb-4">HR Management</span>
-      <Nav className="flex-column">
+      <Nav className="flex-column align-items-start">
         {navItems.map((item, idx) => (
-          <Nav.Link key={idx} href="#" className={item.active ? "fw-bold text-primary" : "text-dark"}>
-            <item.icon size={16} className="me-2" />
+          <Nav.Link
+            key={idx}
+            href="#"
+            className={`d-flex align-items-center w-100 text-start ${
+              item.active ? "fw-bold text-primary" : "text-dark"
+            }`}
+          >
+            <item.icon size={18} className="me-2" />
             {item.label}
           </Nav.Link>
         ))}
