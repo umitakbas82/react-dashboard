@@ -19,6 +19,8 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 
 export default function DashboardLayout({ children }) {
+
+  
   return (
     <div className="d-flex vh-100 vw-100 overflow-hidden">
       <Sidebar />
