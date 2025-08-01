@@ -1,10 +1,15 @@
 import React from 'react'
 import './Header.css'
 
-const Header = () => {
+const Header = ({onToggle}) => {
   return (
     <div className="header">
       <div className="header-content">
+        <button className="sidebar-toggle" onClick={onToggle}>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 12.5L15 7.5L10 2.5L5 7.5L10 12.5Z" fill="#414651"/>
+          </svg>
+        </button>
         <div className="user-dropdown">
           <div className="avatar">
             <div className="avatar-image"></div>
