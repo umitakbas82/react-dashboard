@@ -15,6 +15,62 @@
   right: 0;
   z-index: 999;
   transition: left 0.3s ease-in-out;
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 768px) {
+  .header {
+    left: 0;
+    padding: 0 16px;
+  }
+  
+  .hamburger-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  .sidebar-toggle {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .header {
+    padding: 0 24px;
+  }
+  
+  .hamburger-menu {
+    display: none;
+  }
+  
+  .sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  /* Desktop'ta sidebar kapalıyken header pozisyonu */
+  .header.sidebar-closed {
+    left: 70px;
+  }
+  
+  .header.sidebar-open {
+    left: 265px;
+  }
 }
 
 /* Header adjustment for minimized sidebar */

@@ -12,6 +12,8 @@
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  margin-left: 265px;
+  transition: margin-left 0.3s ease;
 }
 
 .sidebar-overlay {
@@ -21,7 +23,7 @@
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  z-index: 1000;
   opacity: 0;
   animation: fadeIn 0.3s ease-in-out forwards;
 }
@@ -33,13 +35,11 @@
 }
 
 /* Responsive breakpoints */
-@media (max-width: 1470px) {
-  .dashboard {
-    flex-direction: row; /* Keep row layout but sidebar becomes fixed */
-  }
-}
-
 @media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+  }
+  
   .dashboard {
     height: auto;
     min-height: 100vh;
@@ -48,5 +48,15 @@
   .main-content {
     height: auto;
     min-height: 100vh;
+  }
+}
+
+@media (min-width: 769px) {
+  .main-content.sidebar-closed {
+    margin-left: 70px;
+  }
+  
+  .main-content.sidebar-open {
+    margin-left: 265px;
   }
 }
