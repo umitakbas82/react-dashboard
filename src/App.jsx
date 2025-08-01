@@ -5,7 +5,7 @@ import Dashboard from './components/Dashboard/Dashboard'
 import UsersPage from './components/UserPage/UsersPage'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Product from './components/Products/Products';
-import DashboardLayout from './layouts/DashboardLayout';
+import Pages from './components/Pages/Pages';
 
 function App() {
  
@@ -19,6 +19,7 @@ function App() {
       <Route path="/" element={<Dashboard />} />
       <Route path="/users" element={<UsersPage/>}/>
       <Route path="/products" element={<Product/>}/>
+      <Route path="/pages" element={<Pages/>}/>
       
     </Routes>
   </BrowserRouter>
