@@ -1,7 +1,4 @@
-
-
-
-import DashboardLayout from "../../layouts/DashboardLayout";
+import Layout from "../Layout/Layout";
 import { Table, Button, Form, Dropdown, Badge } from "react-bootstrap";
 import { Search, Download, Filter, ArrowUpDown, ChevronDown, MoreVertical } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -200,7 +197,7 @@ export default function UsersPage() {
     };
 
     return (
-        <DashboardLayout>
+        <Layout>
                <div className="content-header">
         <div className="header-info">
           <div className="page-title">
@@ -423,7 +420,7 @@ export default function UsersPage() {
 
 
 
-        </DashboardLayout>
+        </Layout>
     )
 
 }
