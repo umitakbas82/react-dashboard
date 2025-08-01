@@ -5,19 +5,25 @@ const Header = ({onToggle}) => {
   return (
     <div className="header">
       <div className="header-content">
-        <button className="sidebar-toggle" onClick={onToggle}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 12.5L15 7.5L10 2.5L5 7.5L10 12.5Z" fill="#414651"/>
-          </svg>
-        </button>
-        <div className="user-dropdown">
-          <div className="avatar">
-            <div className="avatar-image"></div>
-            <div className="avatar-border"></div>
-          </div>
+      <div className="header-left">
+          <button className="sidebar-toggle" onClick={onToggle}>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 6H21V8H3V6ZM3 11H21V13H3V11ZM3 16H21V18H3V16Z" fill="#414651"/>
+            </svg>
+          </button>
           <div className="user-info">
-            <span className="user-name">John Due</span>
-            <span className="user-role">Web Yöneticisi</span>
+          <div className="avatar">
+              <div className="avatar-image"></div>
+              <div className="avatar-border"></div>
+            </div>
+              <span className="user-name">John Due</span>
+              <span className="user-role">Web Yöneticisi</span>
+            </div>
+        </div>
+        <div className="header-right">
+          <div className="user-dropdown">
+            
+            
           </div>
         </div>
 

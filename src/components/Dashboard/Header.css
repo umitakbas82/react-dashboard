@@ -91,12 +91,14 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  gap: 16px;
 }
 
 .header-right {
   display: flex;
   align-items: center;
   margin-left: auto;
+  gap: 16px;
 }
 
 /* Sidebar Toggle Button */
@@ -166,57 +168,53 @@
   gap: 16px;
 }
 
-.avatar {
+.user-info {
   display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-info .avatar {
+  position: relative;
   width: 40px;
   height: 40px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 200px;
-  background: lightgray 50% / cover no-repeat;
-  position: relative;
+}
+
+.user-info .user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1.4;
+}
+
+.user-info .user-role {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.3;
 }
 
 .avatar-image {
   width: 100%;
   height: 100%;
-  border-radius: 200px;
-  background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiNEQ0RDREMiLz4KPHBhdGggZD0iTTIwIDIwQzIzLjMxMzcgMjAgMjYgMTcuMzEzNyAyNiAxNEMyNiAxMC42ODYzIDIzLjMxMzcgOCAyMCA4QzE2LjY4NjMgOCAxNCAxMC42ODYzIDE0IDE0QzE0IDE3LjMxMzcgMTYuNjg2MyAyMCAyMCAyMFoiIGZpbGw9IiNBQUFBQUEiLz4KPHBhdGggZD0iTTIwIDIyQzEyLjI2ODAgMjIgNiAyOC4yNjgwIDYgMzZINEMzLjQ0NzcyIDM2IDMgMzUuNTUyMyAzIDM1VjM1QzMgMjYuMTYzNCA5LjE2MzQzIDIwIDIwIDIwWiIgZmlsbD0iI0FBQUFBQSIvPgo8L3N2Zz4K) center / cover no-repeat;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .avatar-border {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 200px;
-  border: 0.75px solid var(--Base-Black);
-  opacity: 0.08;
-}
-
-.user-info {
-  color: #7E7676;
-  font-family: Inter, -apple-system, Roboto, Helvetica, sans-serif;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: -0.176px;
-  display: flex;
-  flex-direction: column;
-}
-
-.user-name {
-  color: var(--Base-Black);
-}
-
-.user-role {
-  color: #7E7676;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid #e5e5e5;
+  border-radius: 50%;
 }
 
 .header-controls {
   display: flex;
   align-items: center;
   gap: 24px;
+  margin-right: 255px;
 }
 
 .datetime-controls {
