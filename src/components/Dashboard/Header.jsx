@@ -1,74 +1,101 @@
-import React from 'react'
-import './Header.css'
-
-const Header = () => {
+const Header = ({ onSidebarToggle, isSidebarMinimized }) => {
   return (
-    <div className="header">
-      <div className="header-content">
-        <div className="user-dropdown">
-          <div className="avatar">
-            <div className="avatar-image"></div>
-            <div className="avatar-border"></div>
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: isSidebarMinimized ? '80px' : '280px',
+      right: 0,
+      height: '70px',
+      backgroundColor: 'white',
+      borderBottom: '1px solid #e5e5e5',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '0 24px',
+      transition: 'left 0.3s ease',
+      zIndex: 999
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <button 
+          onClick={onSidebarToggle}
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '8px',
+            borderRadius: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z" fill="#525866"/>
+          </svg>
+        </button>
+        <h1 style={{ fontSize: '20px', fontWeight: 'bold', color: '#1a1a1a' }}>Dashboard</h1>
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: '20px',
+            backgroundColor: '#f0f0f0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <div style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '16px',
+              backgroundColor: '#ddd'
+            }}></div>
           </div>
-          <div className="user-info">
-            <span className="user-name">John Due</span>
-            <span className="user-role">Web Yöneticisi</span>
+          <div>
+            <div style={{ fontSize: '14px', fontWeight: 'bold' }}>John Due</div>
+            <div style={{ fontSize: '12px', color: '#888' }}>Web Yöneticisi</div>
           </div>
         </div>
 
-        <div className="header-controls">
-          <div className="datetime-controls">
-            <div className="datetime-info">
-              <div className="date-info">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M11 2.5999H13.4C13.5591 2.5999 13.7117 2.66312 13.8243 2.77564C13.9368 2.88816 14 3.04077 14 3.1999V12.7999C14 12.959 13.9368 13.1116 13.8243 13.2242C13.7117 13.3367 13.5591 13.3999 13.4 13.3999H2.6C2.44087 13.3999 2.28826 13.3367 2.17574 13.2242C2.06321 13.1116 2 12.959 2 12.7999V3.1999C2 3.04077 2.06321 2.88816 2.17574 2.77564C2.28826 2.66312 2.44087 2.5999 2.6 2.5999H5V1.3999H6.2V2.5999H9.8V1.3999H11V2.5999ZM12.8 7.3999H3.2V12.1999H12.8V7.3999ZM9.8 3.7999H6.2V4.9999H5V3.7999H3.2V6.1999H12.8V3.7999H11V4.9999H9.8V3.7999ZM4.4 8.5999H5.6V9.7999H4.4V8.5999ZM7.4 8.5999H8.6V9.7999H7.4V8.5999ZM10.4 8.5999H11.6V9.7999H10.4V8.5999Z" fill="#525866"/>
-                </svg>
-                <span>12 EKİM CUMA</span>
-              </div>
-              <div className="time-info">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8 14C4.6862 14 2 11.3138 2 8C2 4.6862 4.6862 2 8 2C11.3138 2 14 4.6862 14 8C14 11.3138 11.3138 14 8 14ZM8 12.8C9.27304 12.8 10.4939 12.2943 11.3941 11.3941C12.2943 10.4939 12.8 9.27304 12.8 8C12.8 6.72696 12.2943 5.50606 11.3941 4.60589C10.4939 3.70571 9.27304 3.2 8 3.2C6.72696 3.2 5.50606 3.70571 4.60589 4.60589C3.70571 5.50606 3.2 6.72696 3.2 8C3.2 9.27304 3.70571 10.4939 4.60589 11.3941C5.50606 12.2943 6.72696 12.8 8 12.8ZM8.6 8H11V9.2H7.4V5H8.6V8Z" fill="#525866"/>
-                </svg>
-                <span>20:07</span>
-              </div>
-              <div className="weather-info">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6.0021 3.80397C6.39588 2.97095 7.05267 2.29053 7.87127 1.86758C8.68986 1.44462 9.62483 1.30259 10.5321 1.46337C10.3774 1.9373 10.357 2.44479 10.4731 2.92961C10.5892 3.41443 10.8372 3.85766 11.1897 4.21017C11.5422 4.56268 11.9854 4.81071 12.4703 4.92678C12.9551 5.04285 13.4626 5.02242 13.9365 4.86777C13.9785 5.10537 14.0001 5.35017 14.0001 5.59977C14.0011 6.30742 13.8226 7.00375 13.4811 7.62357C13.9842 8.06673 14.3403 8.65261 14.5021 9.30321C14.664 9.95381 14.6238 10.6383 14.387 11.2655C14.1501 11.8927 13.7279 12.4329 13.1765 12.8141C12.625 13.1954 11.9705 13.3997 11.3001 13.3998H6.2001C4.94468 13.3991 3.73951 12.9065 2.84294 12.0278C1.94636 11.149 1.42975 9.95394 1.40385 8.69879C1.37796 7.44364 1.84483 6.2283 2.70439 5.3133C3.56395 4.3983 4.74778 3.85647 6.0021 3.80397ZM7.3083 3.92817C8.06444 4.10835 8.76565 4.46912 9.35187 4.97958C9.93809 5.49004 10.3919 6.13498 10.6743 6.85917C11.2686 6.74527 11.8828 6.7961 12.4503 7.00617C12.5859 6.75117 12.6861 6.47517 12.7431 6.18417C11.8358 6.10054 10.9863 5.70194 10.3421 5.05753C9.69792 4.41311 9.29962 3.56354 9.2163 2.65617C8.43703 2.81096 7.7509 3.26838 7.3083 3.92817ZM11.3001 12.1998C11.6463 12.1997 11.9872 12.1141 12.2923 11.9504C12.5974 11.7868 12.8573 11.5503 13.0489 11.2619C13.2405 10.9735 13.3578 10.6423 13.3905 10.2976C13.4231 9.95289 13.37 9.60549 13.2358 9.2863C13.1017 8.96711 12.8908 8.68603 12.6218 8.46808C12.3527 8.25013 12.034 8.10207 11.694 8.03709C11.3539 7.97211 11.003 7.99221 10.6726 8.09561C10.3422 8.19902 10.0425 8.38251 9.8001 8.62977V8.59977C9.8001 7.88775 9.58896 7.19173 9.19339 6.59971C8.79781 6.0077 8.23557 5.54628 7.57776 5.2738C6.91994 5.00133 6.1961 4.93003 5.49777 5.06894C4.79944 5.20785 4.15798 5.55071 3.65451 6.05418C3.15104 6.55765 2.80818 7.19911 2.66927 7.89744C2.53036 8.59577 2.60166 9.31961 2.87413 9.97743C3.14661 10.6352 3.60803 11.1975 4.20004 11.5931C4.79206 11.9886 5.48808 12.1998 6.2001 12.1998H11.3001Z" fill="#525866"/>
-                </svg>
-                <span>7º</span>
-              </div>
-            </div>
-            <div className="header-actions">
-            <button className="language-button">
-  <span>TR</span>
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 7.5L10 12.5L15 7.5" stroke="#414651" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-  <div className="language-dropdown">
-    <button className="language-option">TR</button>
-    <button className="language-option">EN</button>
-  </div>
-</button>
-              <div className="action-buttons">
-                <button className="notification-button">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 13.75H17.5V15.25H2.5V13.75H4V8.5C4 6.9087 4.63214 5.38258 5.75736 4.25736C6.88258 3.13214 8.4087 2.5 10 2.5C11.5913 2.5 13.1174 3.13214 14.2426 4.25736C15.3679 5.38258 16 6.9087 16 8.5V13.75ZM14.5 13.75V8.5C14.5 7.30653 14.0259 6.16193 13.182 5.31802C12.3381 4.47411 11.1935 4 10 4C8.80653 4 7.66193 4.47411 6.81802 5.31802C5.97411 6.16193 5.5 7.30653 5.5 8.5V13.75H14.5ZM7.75 16.75H12.25V18.25H7.75V16.75Z" fill="#525866"/>
-                  </svg>
-                  <div className="notification-badge"></div>
-                </button>
-                <button className="logout-button">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 14.5H5.5V16H14.5V4H5.5V5.5H4V3.25C4 3.05109 4.07902 2.86032 4.21967 2.71967C4.36032 2.57902 4.55109 2.5 4.75 2.5H15.25C15.4489 2.5 15.6397 2.57902 15.7803 2.71967C15.921 2.86032 16 3.05109 16 3.25V16.75C16 16.9489 15.921 17.1397 15.7803 17.2803C15.6397 17.421 15.4489 17.5 15.25 17.5H4.75C4.55109 17.5 4.36032 17.421 4.21967 17.2803C4.07902 17.1397 4 16.9489 4 16.75V14.5ZM5.5 9.25H10.75V10.75H5.5V13L1.75 10L5.5 7V9.25Z" fill="#525866"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '8px',
+            borderRadius: '4px',
+            position: 'relative'
+          }}>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 13.75H17.5V15.25H2.5V13.75H4V8.5C4 6.9087 4.63214 5.38258 5.75736 4.25736C6.88258 3.13214 8.4087 2.5 10 2.5C11.5913 2.5 13.1174 3.13214 14.2426 4.25736C15.3679 5.38258 16 6.9087 16 8.5V13.75ZM14.5 13.75V8.5C14.5 7.30653 14.0259 6.16193 13.182 5.31802C12.3381 4.47411 11.1935 4 10 4C8.80653 4 7.66193 4.47411 6.81802 5.31802C5.97411 6.16193 5.5 7.30653 5.5 8.5V13.75H14.5ZM7.75 16.75H12.25V18.25H7.75V16.75Z" fill="#525866"/>
+            </svg>
+            <div style={{
+              position: 'absolute',
+              top: '6px',
+              right: '6px',
+              width: '8px',
+              height: '8px',
+              backgroundColor: '#ff4444',
+              borderRadius: '4px'
+            }}></div>
+          </button>
+          
+          <button style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '8px',
+            borderRadius: '4px'
+          }}>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 14.5H5.5V16H14.5V4H5.5V5.5H4V3.25C4 3.05109 4.07902 2.86032 4.21967 2.71967C4.36032 2.57902 4.55109 2.5 4.75 2.5H15.25C15.4489 2.5 15.6397 2.57902 15.7803 2.71967C15.921 2.86032 16 3.05109 16 3.25V16.75C16 16.9489 15.921 17.1397 15.7803 17.2803C16.6397 17.421 15.4489 17.5 15.25 17.5H4.75C4.55109 17.5 4.36032 17.421 4.21967 17.2803C4.07902 17.1397 4 16.9489 4 16.75V14.5ZM5.5 9.25H10.75V10.75H5.5V13L1.75 10L5.5 7V9.25Z" fill="#525866"/>
+            </svg>
+          </button>
         </div>
       </div>
-      <div className="header-divider"></div>
     </div>
-  )
-}
-
-export default Header
+  );
+};

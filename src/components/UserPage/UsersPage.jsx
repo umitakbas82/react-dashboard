@@ -1,10 +1,32 @@
-import DashboardLayout from "../layouts/DashboardLayout";
+
+
+
+import DashboardLayout from "../../layouts/DashboardLayout";
 import { Table, Button, Form, Dropdown, Badge } from "react-bootstrap";
 import { Search, Download, Filter, ArrowUpDown, ChevronDown, MoreVertical } from "lucide-react";
+import { useState, useEffect } from "react";
 
-import { useState } from "react";
 
 export default function UsersPage() {
+
+    const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 1470)
+
+    useEffect(() => {
+      const handleResize = () => {
+        if (window.innerWidth > 1470) {
+          setSidebarOpen(true)
+        } else {
+          setSidebarOpen(false)
+        }
+      }
+  
+      window.addEventListener('resize', handleResize)
+      return () => window.removeEventListener('resize', handleResize)
+    }, [])
+  
+    const toggleSidebar = () => {
+      setSidebarOpen(!sidebarOpen)
+    }
     const allUsers = [
         {
             id: 1,
@@ -179,20 +201,23 @@ export default function UsersPage() {
 
     return (
         <DashboardLayout>
-            <div className="container-fluid">
-                <div className="row ">
-                    <div className="col-12">
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Kullanıcılar</h4>
-
-                            <button className="btn btn-primary">+ Yeni Kullanıcı Ekle</button>
-                        </div>
-                    </div>
-                    <div className="text-muted text-start mb-4 ">
-                        Bu listede sisteminize kayıtlı kullanıcıların ad ve soyadlarını görüntüleyebilirsiniz. Kullanıcı profillerine tıklayarak detaylarını inceleyebilirsiniz.
-                    </div>
-                </div>
-            </div>
+               <div className="content-header">
+        <div className="header-info">
+          <div className="page-title">
+            <h1>Genel Bakış</h1>
+            <p>Bu panelden web sitenizin durumunu hızlıca gözden geçirebilir, yeni içerikler ekleyebilir ve analizlerinizi inceleyebilirsiniz.</p>
+          </div>
+        </div>
+        <button className="new-content-button">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.25 9.25V4.75H10.75V9.25H15.25V10.75H10.75V15.25H9.25V10.75H4.75V9.25H9.25Z" fill="white"/>
+          </svg>
+          <span>Yeni İçerik</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 10.879L13.7125 7.1665L14.773 8.227L10 13L5.227 8.227L6.2875 7.1665L10 10.879Z" fill="white"/>
+          </svg>
+        </button>
+      </div>
 <hr className="my-2" />
 
 
