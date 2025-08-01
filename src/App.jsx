@@ -15,11 +15,11 @@ function App() {
     <BrowserRouter>
     
     <Routes>
-    <Route element={<DashboardLayout />}>
+   
       <Route path="/" element={<Dashboard />} />
       <Route path="/users" element={<UsersPage/>}/>
       <Route path="/products" element={<Product/>}/>
-      </Route>
+      
     </Routes>
   </BrowserRouter>
   )
