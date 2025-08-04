@@ -3,7 +3,6 @@ import { Table, Button, Form, Dropdown, Badge } from "react-bootstrap";
 import { Search, Download, Filter, ArrowUpDown, ChevronDown, MoreVertical } from "lucide-react";
 import { useState, useEffect } from "react";
 
-
 export default function UsersPage() {
 
     const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 1470)
@@ -201,8 +200,8 @@ export default function UsersPage() {
                <div className="content-header">
         <div className="header-info">
           <div className="page-title">
-            <h1>Genel Bakış</h1>
-            <p>Bu panelden web sitenizin durumunu hızlıca gözden geçirebilir, yeni içerikler ekleyebilir ve analizlerinizi inceleyebilirsiniz.</p>
+            <h1>Kullanıcılar</h1>
+            <p>Bu listede sisteminize kayıtlı kullanıcıların ad ve soyadlarını görüntüleyebilirsiniz. Kullanıcı profillerine tıklayarak detaylarını inceleyebilirsiniz.</p>
           </div>
         </div>
         <button className="new-content-button">
@@ -222,122 +221,152 @@ export default function UsersPage() {
              
 
                 {/* Search and Filter Bar */}
-                <div className="d-flex flex-wrap align-items-center gap-3 mb-4">
-                    {/* Search Input */}
-                    <div className="position-relative">
-                        <Search
-                            size={16}
-                            className="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
-                        />
-                        <Form.Control
-                            type="text"
-                            placeholder="Arama..."
-                            value={search}
-                            onChange={handleSearch}
-                            style={{
-                                paddingLeft: "2.5rem",
-                                width: "300px",
-                                border: "1px solid #e9ecef",
-                                borderRadius: "8px"
-                            }}
-                        />
+                <div className="d-flex align-items-center justify-content-between mb-4">
+                    {/* Left side - Search and Filter */}
+                    <div className="d-flex align-items-center gap-3">
+                        {/* Search Input */}
+                        <div className="position-relative">
+                            <Search
+                                size={16}
+                                className="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
+                            />
+                            <Form.Control
+                                type="text"
+                                placeholder="Arama..."
+                                value={search}
+                                onChange={handleSearch}
+                                style={{
+                                    paddingLeft: "2.5rem",
+                                    width: "280px",
+                                    border: "1px solid #e5e7eb",
+                                    borderRadius: "6px",
+                                    fontSize: "14px",
+                                    height: "40px"
+                                }}
+                            />
+                        </div>
+
+                        {/* Filter Dropdown */}
+                        <Dropdown>
+                            <Dropdown.Toggle
+                                variant="outline-secondary"
+                                className="d-flex align-items-center gap-2"
+                                style={{ 
+                                    borderRadius: "6px",
+                                    border: "1px solid #e5e7eb",
+                                    color: "#6b7280",
+                                    fontSize: "14px",
+                                    height: "40px",
+                                    paddingLeft: "12px",
+                                    paddingRight: "12px",
+                                    backgroundColor: "white"
+                                }}
+                            >
+                                <Filter size={16} />
+                                Filtrele
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => handleFilter("")}>Tümü</Dropdown.Item>
+                                <Dropdown.Item onClick={() => handleFilter("Aktif")}>Aktif</Dropdown.Item>
+                                <Dropdown.Item onClick={() => handleFilter("Askıya Alındı")}>Askıya Alındı</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </div>
-                    <hr className="my-2" />
-                    {/* Export Button */}
-                    <Button
-                        variant="outline-secondary"
-                        onClick={handleExport}
-                        className="d-flex align-items-center gap-2"
-                        style={{ borderRadius: "8px" }}
-                    >
-                        <Download size={16} />
-                        Dışa Aktar
-                    </Button>
 
-                    {/* Filter Dropdown */}
-                    <Dropdown>
-                        <Dropdown.Toggle
+                    {/* Right side - Export and Sort */}
+                    <div className="d-flex align-items-center gap-3">
+                        {/* Export Button */}
+                        <Button
                             variant="outline-secondary"
+                            onClick={handleExport}
                             className="d-flex align-items-center gap-2"
-                            style={{ borderRadius: "8px" }}
+                            style={{ 
+                                borderRadius: "6px",
+                                border: "1px solid #e5e7eb",
+                                color: "#6b7280",
+                                fontSize: "14px",
+                                height: "40px",
+                                paddingLeft: "12px",
+                                paddingRight: "12px",
+                                backgroundColor: "white"
+                            }}
                         >
-                            <Filter size={16} />
-                            Filtrele
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => handleFilter("")}>Tümü</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleFilter("Aktif")}>Aktif</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleFilter("Askıya Alındı")}>Askıya Alındı</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                            <Download size={16} />
+                            Dışa Aktar
+                        </Button>
 
-                    {/* Sort Dropdown */}
-                    <Dropdown>
-                        <Dropdown.Toggle
-                            variant="outline-secondary"
-                            className="d-flex align-items-center gap-2"
-                            style={{ borderRadius: "8px" }}
-                        >
-                            Sırala
-                            <ChevronDown size={16} />
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={() => handleSort("name")}>Ada Göre</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSort("role")}>Role Göre</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSort("registerDate")}>Tarihe Göre</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                        {/* Sort Dropdown */}
+                        <Dropdown>
+                            <Dropdown.Toggle
+                                variant="outline-secondary"
+                                className="d-flex align-items-center gap-2"
+                                style={{ 
+                                    borderRadius: "6px",
+                                    border: "1px solid #e5e7eb",
+                                    color: "#6b7280",
+                                    fontSize: "14px",
+                                    height: "40px",
+                                    paddingLeft: "12px",
+                                    paddingRight: "12px",
+                                    backgroundColor: "white"
+                                }}
+                            >
+                                <ArrowUpDown size={16} />
+                                Sırala
+                                <ChevronDown size={14} />
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={() => handleSort("name")}>Ada Göre</Dropdown.Item>
+                                <Dropdown.Item onClick={() => handleSort("role")}>Role Göre</Dropdown.Item>
+                                <Dropdown.Item onClick={() => handleSort("registerDate")}>Tarihe Göre</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
                 </div>
 
                 {/* Users Table */}
-                <div className="bg-white rounded-3 shadow-sm">
-                    <Table responsive className="mb-0">
-                        <thead className="bg-light">
+                <div className="bg-white rounded-3 shadow-sm overflow-hidden">
+                    <Table responsive className="mb-0" style={{ fontSize: "14px" }}>
+                        <thead style={{ backgroundColor: "#f8f9fa" }}>
                             <tr>
                                 <th
                                     className="border-0 py-3 px-4 text-muted fw-medium"
-                                    style={{ fontSize: "0.875rem" }}
+                                    style={{ fontSize: "12px", fontWeight: "500", color: "#6b7280" }}
                                 >
                                     <Form.Check type="checkbox" />
                                 </th>
                                 <th
                                     className="border-0 py-3 px-4 text-muted fw-medium cursor-pointer"
-                                    style={{ fontSize: "0.875rem" }}
+                                    style={{ fontSize: "12px", fontWeight: "500", color: "#6b7280" }}
                                     onClick={() => handleSort("name")}
                                 >
-                                    Adı Soyadı {sortField === "name" && <ChevronDown size={14} />}
-                                </th>
-                                <th
-                                    className="border-0 py-3 px-4 text-muted fw-medium"
-                                    style={{ fontSize: "0.875rem" }}
-                                >
-                                    E-posta
+                                    Başlık {sortField === "name" && <ChevronDown size={14} />}
                                 </th>
                                 <th
                                     className="border-0 py-3 px-4 text-muted fw-medium cursor-pointer"
-                                    style={{ fontSize: "0.875rem" }}
+                                    style={{ fontSize: "12px", fontWeight: "500", color: "#6b7280" }}
                                     onClick={() => handleSort("role")}
                                 >
-                                    Rol {sortField === "role" && <ChevronDown size={14} />}
+                                    Yazar {sortField === "role" && <ChevronDown size={14} />}
                                 </th>
                                 <th
                                     className="border-0 py-3 px-4 text-muted fw-medium cursor-pointer"
-                                    style={{ fontSize: "0.875rem" }}
+                                    style={{ fontSize: "12px", fontWeight: "500", color: "#6b7280" }}
                                     onClick={() => handleSort("registerDate")}
                                 >
-                                    Kayıt Tarihi {sortField === "registerDate" && <ChevronDown size={14} />}
+                                    Oluşturulma Tarihi {sortField === "registerDate" && <ChevronDown size={14} />}
                                 </th>
                                 <th
                                     className="border-0 py-3 px-4 text-muted fw-medium"
-                                    style={{ fontSize: "0.875rem" }}
+                                    style={{ fontSize: "12px", fontWeight: "500", color: "#6b7280" }}
                                 >
-                                    Durumu
+                                    Durum
                                 </th>
                                 <th
                                     className="border-0 py-3 px-4 text-muted fw-medium"
-                                    style={{ fontSize: "0.875rem" }}
+                                    style={{ fontSize: "12px", fontWeight: "500", color: "#6b7280" }}
                                 >
-                                    Son İşlem
+                                    Son Güncelleme
                                 </th>
                                 <th className="border-0 py-3 px-4"></th>
                             </tr>
