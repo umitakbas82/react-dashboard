@@ -1,244 +1,311 @@
-import React, { useState } from 'react'
-import Layout from '../Layout/Layout'
-import './Pages.css'
+import React, { useState, useMemo } from 'react';
+import { Search, Download, Filter, ArrowUpDown, MoreVertical, X, Eye, EyeOff } from 'lucide-react';
+import './Pages.css';
+import Layout from '../Layout/Layout';
 
-const Pages = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedFilter, setSelectedFilter] = useState('Tümü')
-
-  const pagesData = [
-    {
-      id: 1,
-      title: 'Anasayfa',
-      author: {
-        name: 'James Brown',
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face'
-      },
-      createdDate: '22/10/2024',
-      status: 'Yayında',
-      lastUpdate: '02/03/2024'
-    },
-    {
-      id: 2,
-      title: 'Hakkımızda',
-      author: {
-        name: 'Sophia Williams',
-        avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b048?w=40&h=40&fit=crop&crop=face'
-      },
-      createdDate: '22/10/2024',
-      status: 'Yayında',
-      lastUpdate: '02/03/2024'
-    },
-    {
-      id: 3,
-      title: 'Blog',
-      author: {
-        name: 'Arthur Taylor',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face'
-      },
-      createdDate: '22/10/2024',
-      status: 'Taslak',
-      lastUpdate: '02/03/2024'
-    },
-    {
-      id: 4,
-      title: 'Hizmetler',
-      author: {
-        name: 'Matthew Johnson',
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face'
-      },
-      createdDate: '22/10/2024',
-      status: 'Arşivlendi',
-      lastUpdate: '02/03/2024'
-    },
-    {
-      id: 5,
-      title: 'Referanslar',
-      author: {
-        name: 'Matthew Johnson',
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face'
-      },
-      createdDate: '22/10/2024',
-      status: 'Arşivlendi',
-      lastUpdate: '02/03/2024'
-    },
-    {
-      id: 6,
-      title: 'Contact',
-      author: {
-        name: 'Laura Perez',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face'
-      },
-      createdDate: '22/10/2024',
-      status: 'Yayında',
-      lastUpdate: '02/03/2024'
-    },
-    {
-      id: 7,
-      title: 'Kariyer',
-      author: {
-        name: 'Wei Chen',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face'
-      },
-      createdDate: '22/10/2024',
-      status: 'Yayında',
-      lastUpdate: '02/03/2024'
-    },
-    {
-      id: 8,
-      title: 'İletişim Formu',
-      author: {
-        name: 'Arthur Taylor',
-        avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face'
-      },
-      createdDate: '22/10/2024',
-      status: 'Taslak',
-      lastUpdate: '02/03/2024'
-    },
-    {
-      id: 9,
-      title: 'Yazılım',
-      author: {
-        name: 'Emma Wright',
-        avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face'
-      },
-      createdDate: '22/10/2024',
-      status: 'Arşivlendi',
-      lastUpdate: '02/03/2024'
-    },
-    {
-      id: 10,
-      title: 'Tasarım',
-      author: {
-        name: 'Matthew Johnson',
-        avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=40&h=40&fit=crop&crop=face'
-      },
-      createdDate: '22/10/2024',
-      status: 'Yayında',
-      lastUpdate: '02/03/2024'
-    }
-  ]
-
-  const getStatusBadge = (status) => {
-    const statusConfig = {
-      'Yayında': { class: 'status-published', color: '#10B981' },
-      'Taslak': { class: 'status-draft', color: '#6B7280' },
-      'Arşivlendi': { class: 'status-archived', color: '#EF4444' }
-    }
-    
-    return statusConfig[status] || statusConfig['Taslak']
+const data = [
+  { 
+    id: 1, 
+    title: 'Anasayfa', 
+    authors: [{ name: 'James Brown', avatar: 'https://i.pravatar.cc/32?u=1' }], 
+    date: '22/10/2024', 
+    status: 'Yayında', 
+    lastUpdate: '02/03/2024' 
+  },
+  { 
+    id: 2, 
+    title: 'Hakkımızda', 
+    authors: [{ name: 'Sophia Williams', avatar: 'https://i.pravatar.cc/32?u=2' }], 
+    date: '22/10/2024', 
+    status: 'Yayında', 
+    lastUpdate: '02/03/2024' 
+  },
+  { 
+    id: 3, 
+    title: 'Blog', 
+    authors: [{ name: 'Arthur Taylor', avatar: 'https://i.pravatar.cc/32?u=3' }], 
+    date: '22/10/2024', 
+    status: 'Taslak', 
+    lastUpdate: '02/03/2024' 
+  },
+  { 
+    id: 4, 
+    title: 'Hizmetler', 
+    authors: [
+      { name: 'Matthew Johnson', avatar: 'https://i.pravatar.cc/32?u=4' },
+      { name: 'Laura Perez', avatar: 'https://i.pravatar.cc/32?u=5' },
+      { name: 'Wei Chen', avatar: 'https://i.pravatar.cc/32?u=6' },
+      { name: 'Emma Wright', avatar: 'https://i.pravatar.cc/32?u=7' },
+      { name: 'Arthur Taylor', avatar: 'https://i.pravatar.cc/32?u=8' }
+    ], 
+    date: '22/10/2024', 
+    status: 'Arşivlendi', 
+    lastUpdate: '02/03/2024' 
+  },
+  { 
+    id: 5, 
+    title: 'Referanslar', 
+    authors: [{ name: 'Matthew Johnson', avatar: 'https://i.pravatar.cc/32?u=9' }], 
+    date: '22/10/2024', 
+    status: 'Arşivlendi', 
+    lastUpdate: '02/03/2024' 
+  },
+  { 
+    id: 6, 
+    title: 'Contact', 
+    authors: [{ name: 'Laura Perez', avatar: 'https://i.pravatar.cc/32?u=10' }], 
+    date: '22/10/2024', 
+    status: 'Yayında', 
+    lastUpdate: '02/03/2024' 
+  },
+  { 
+    id: 7, 
+    title: 'Kariyer', 
+    authors: [{ name: 'Wei Chen', avatar: 'https://i.pravatar.cc/32?u=11' }], 
+    date: '22/10/2024', 
+    status: 'Yayında', 
+    lastUpdate: '02/03/2024' 
+  },
+  { 
+    id: 8, 
+    title: 'İletişim Formu', 
+    authors: [{ name: 'Arthur Taylor', avatar: 'https://i.pravatar.cc/32?u=12' }], 
+    date: '22/10/2024', 
+    status: 'Taslak', 
+    lastUpdate: '02/03/2024' 
+  },
+  { 
+    id: 9, 
+    title: 'Yazılım', 
+    authors: [{ name: 'Emma Wright', avatar: 'https://i.pravatar.cc/32?u=13' }], 
+    date: '22/10/2024', 
+    status: 'Arşivlendi', 
+    lastUpdate: '02/03/2024' 
+  },
+  { 
+    id: 10, 
+    title: 'Tasarım', 
+    authors: [{ name: 'Matthew Johnson', avatar: 'https://i.pravatar.cc/32?u=14' }], 
+    date: '22/10/2024', 
+    status: 'Yayında', 
+    lastUpdate: '02/03/2024' 
   }
+];
 
-  const filteredPages = pagesData.filter(page => {
-    const matchesSearch = page.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         page.author.name.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesFilter = selectedFilter === 'Tümü' || page.status === selectedFilter
-    
-    return matchesSearch && matchesFilter
-  })
+const badgeColor = { Yayında: 'live', Taslak: 'draft', Arşivlendi: 'archived' };
+
+export default function UsersPage() {
+  const [search, setSearch] = useState("");
+  const [users, setUsers] = useState(data);
+  const [sortField, setSortField] = useState("");
+  const [sortDirection, setSortDirection] = useState("asc");
+  const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role: 'admin',
+    status: 'active',
+    phone: '',
+    city: 'ankara',
+    profilePhoto: null
+  });
+
+  // Search functionality
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    if (value === '') {
+      setUsers(data);
+    } else {
+      setUsers(
+        data.filter(
+          (u) => u.title.toLowerCase().includes(value) ||
+                 u.authors.some(a => a.name.toLowerCase().includes(value)) ||
+                 u.status.toLowerCase().includes(value)
+        )
+      );
+    }
+  };
+
+  // Sort functionality
+  const handleSort = (field) => {
+    const direction = sortField === field && sortDirection === "asc" ? "desc" : "asc";
+    setSortField(field);
+    setSortDirection(direction);
+
+    const sorted = [...users].sort((a, b) => {
+      if (direction === "asc") {
+        return a[field].localeCompare(b[field]);
+      } else {
+        return b[field].localeCompare(a[field]);
+      }
+    });
+    setUsers(sorted);
+  };
+
+  // Filter functionality
+  const handleFilter = (status) => {
+    if (!status) {
+      setUsers(data);
+    } else {
+      setUsers(data.filter((u) => u.status === status));
+    }
+  };
+
+  // Export functionality
+  const handleExport = () => {
+    const csv = [
+      ["Başlık", "Yazar", "Tarih", "Durumu", "Son Güncelleme"],
+      ...users.map((u) => [
+        u.title,
+        u.authors.map(a => a.name).join('; '),
+        u.date,
+        u.status,
+        u.lastUpdate,
+      ]),
+    ]
+      .map((row) => row.join(","))
+      .join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", "kullanicilar.csv");
+    link.click();
+  };
+
+  // Form handling
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form data:', formData);
+    setIsOffcanvasOpen(false);
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      password: '',
+      role: 'admin',
+      status: 'active',
+      phone: '',
+      city: 'ankara',
+      profilePhoto: null
+    });
+  };
+
+  const checkPasswordStrength = (password) => {
+    const checks = {
+      hasUpperCase: /[A-Z]/.test(password),
+      hasLowerCase: /[a-z]/.test(password),
+      hasNumbers: /\d/.test(password),
+      hasMinLength: password.length >= 8
+    };
+    return checks;
+  };
+
+  const passwordChecks = checkPasswordStrength(formData.password);
+  const passwordScore = Object.values(passwordChecks).filter(Boolean).length;
 
   return (
     <Layout>
-      <div className="pages-container">
-        {/* Header Section */}
-        <div className="pages-header">
-          <div className="search-section">
+      <div className="content-header mb-4">
+        <div className="header-info">
+          <div className="page-title">
+            <h1>Kullanıcılar</h1>
+            <p>Sistem kullanıcılarını yönetin, yeni kullanıcılar ekleyin ve mevcut kullanıcı bilgilerini güncelleyin.</p>
+          </div>
+        </div>
+        <button className="new-content-button" onClick={() => setIsOffcanvasOpen(true)}>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.25 9.25V4.75H10.75V9.25H15.25V10.75H10.75V15.25H9.25V10.75H4.75V9.25H9.25Z" fill="white"/>
+          </svg>
+          <span>Yeni Kullanıcı Ekle</span>
+        </button>
+      </div>
+      <hr className="my-4" />
+      <div className="users-container">
+        <div className="users-header">
+          <div className="header-actions">
             <div className="search-input-container">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M17.5 17.5L12.5001 12.5M14.1667 8.33333C14.1667 11.555 11.555 14.1667 8.33333 14.1667C5.11167 14.1667 2.5 11.555 2.5 8.33333C2.5 5.11167 5.11167 2.5 8.33333 2.5C11.555 2.5 14.1667 5.11167 14.1667 8.33333Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <Search size={18} />
               <input
                 type="text"
                 placeholder="Arama..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
+                value={search}
+                onChange={handleSearch}
               />
-              <span className="search-shortcut">⌘K</span>
+              <span className="search-shortcut">⌘T</span>
             </div>
-          </div>
-
-          <div className="header-actions">
-            <button className="export-btn">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6.66667 14.1667L10 17.5M10 17.5L13.3333 14.1667M10 17.5V10M17.5 14.1667V15.8333C17.5 16.2754 17.3244 16.6993 17.0118 17.0118C16.6993 17.3244 16.2754 17.5 15.8333 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V14.1667" stroke="#374151" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Dışa Aktar
-            </button>
-            
-            <button className="filter-btn">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 10H15M2.5 5H17.5M7.5 15H12.5" stroke="#374151" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Filtrele
-            </button>
-
-            <div className="sort-dropdown">
-              <button className="sort-btn">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3.33333 5H16.6667M5 10H15M7.5 15H12.5" stroke="#374151" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                Sırala
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5 7.5L10 12.5L15 7.5" stroke="#374151" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-            </div>
+            <button className="btn-export" onClick={handleExport}><Download size={16} /> Dışa Aktar</button>
+            <button className="btn-filter" onClick={() => handleFilter()}><Filter size={16} /> Filtrele</button>
+            <button className="btn-sort" onClick={() => handleSort('title')}><ArrowUpDown size={16} /> Sırala</button>
           </div>
         </div>
 
-        {/* Table Section */}
-        <div className="pages-table-container">
-          <table className="pages-table">
+        <div className="users-table-container">
+          <table className="users-table">
             <thead>
               <tr>
-                <th>
-                  <input type="checkbox" className="checkbox" />
-                </th>
-                <th>Başlık</th>
+                <th><input type="checkbox" /></th>
                 <th>Yazar</th>
+                <th>Başlık</th>
+                
                 <th>Oluşturulma Tarihi</th>
-                <th>Durum</th>
+                <th>Durumu</th>
                 <th>Son Güncelleme</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {filteredPages.map((page) => (
-                <tr key={page.id} className="table-row">
-                  <td>
-                    <input type="checkbox" className="checkbox" />
-                  </td>
-                  <td className="title-cell">
-                    <span className="page-title">{page.title}</span>
-                  </td>
+              {users.map(row => (
+                <tr key={row.id}>
+                  <td><input type="checkbox" /></td>
                   <td className="author-cell">
                     <div className="author-info">
-                      <img
-                        src={page.author.avatar}
-                        alt={page.author.name}
-                        className="author-avatar"
-                      />
-                      <span className="author-name">{page.author.name}</span>
+                      {row.authors.length === 1 ? (
+                        <>
+                          <img src={row.authors[0].avatar} alt={row.authors[0].name} className="author-avatar-single" />
+                          <span className="author-name">{row.authors[0].name}</span>
+                        </>
+                      ) : (
+                        <div className="author-group">
+                          {row.authors.slice(0, 3).map((author, idx) => (
+                            <img
+                              key={author.name}
+                              src={author.avatar}
+                              alt={author.name}
+                              className="author-avatar-group"
+                              style={{ zIndex: 3 - idx }}
+                            />
+                          ))}
+                          {row.authors.length > 3 && (
+                            <span className="author-more">+{row.authors.length - 3}</span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </td>
-                  <td className="date-cell">{page.createdDate}</td>
+                  <td className="title-cell">{row.title}</td>
+               
+                  <td className="date-cell">{row.date}</td>
                   <td className="status-cell">
-                    <span 
-                      className={`status-badge ${getStatusBadge(page.status).class}`}
-                    >
-                      <span className="status-dot">●</span>
-                      {page.status}
+                    <span className={`status-badge status-${row.status.toLowerCase()}`}>
+                      <span className="status-indicator"></span>
+                      {row.status}
                     </span>
                   </td>
-                  <td className="date-cell">{page.lastUpdate}</td>
+                  <td className="date-cell">{row.lastUpdate}</td>
                   <td className="actions-cell">
-                    <button className="action-menu-btn">
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 10.8333C10.4602 10.8333 10.8333 10.4602 10.8333 10C10.8333 9.53976 10.4602 9.16667 10 9.16667C9.53976 9.16667 9.16667 9.53976 9.16667 10C9.16667 10.4602 9.53976 10.8333 10 10.8333Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M10 4.99999C10.4602 4.99999 10.8333 4.62689 10.8333 4.16666C10.8333 3.70642 10.4602 3.33333 10 3.33333C9.53976 3.33333 9.16667 3.70642 9.16667 4.16666C9.16667 4.62689 9.53976 4.99999 10 4.99999Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M10 16.6667C10.4602 16.6667 10.8333 16.2936 10.8333 15.8333C10.8333 15.3731 10.4602 15 10 15C9.53976 15 9.16667 15.3731 9.16667 15.8333C9.16667 16.2936 9.53976 16.6667 10 16.6667Z" stroke="#9CA3AF" strokeWidth="1.66667" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
+                    <button className="action-btn">
+                      <MoreVertical size={16} />
                     </button>
                   </td>
                 </tr>
@@ -246,9 +313,187 @@ const Pages = () => {
             </tbody>
           </table>
         </div>
+
+        {/* Offcanvas Panel */}
+        <div className={`offcanvas-panel ${isOffcanvasOpen ? 'open' : ''}`}>
+          <div className="offcanvas-header">
+            <h2>Yeni Kullanıcı Ekle</h2>
+            <button className="close-btn" onClick={() => setIsOffcanvasOpen(false)}>
+              <X size={24} />
+            </button>
+          </div>
+          <div className="offcanvas-body">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>Ad Soyad</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder="Ad Soyad giriniz"
+                  required
+                />
+              </div>
+              
+              <div className="form-group">
+                <label>E-posta</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder="ornek@email.com"
+                  required
+                />
+              </div>
+              
+              <div className="form-group">
+                <label>Şifre</label>
+                <div className="password-input">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button 
+                    type="button" 
+                    className="toggle-password"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+                <div className="password-strength">
+                  <div className="strength-bars">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div 
+                        key={i} 
+                        className={`strength-bar ${i <= passwordScore ? 'active' : ''}`}
+                        style={{ '--bar-color': passwordScore >= 4 ? '#10B981' : passwordScore >= 2 ? '#F59E0B' : '#EF4444' }}
+                      />
+                    ))}
+                  </div>
+                  <div className="password-requirements">
+                    <p>Şifre en az 8 karakter uzunluğunda olmalı ve şunları içermelidir:</p>
+                    <ul>
+                      <li className={passwordChecks.hasUpperCase ? 'valid' : ''}>Büyük harf (A-Z)</li>
+                      <li className={passwordChecks.hasLowerCase ? 'valid' : ''}>Küçük harf (a-z)</li>
+                      <li className={passwordChecks.hasNumbers ? 'valid' : ''}>Rakam (0-9)</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Rol</label>
+                  <select 
+                    name="role" 
+                    value={formData.role}
+                    onChange={handleInputChange}
+                  >
+                    <option value="admin">Admin</option>
+                    <option value="editor">Editör</option>
+                    <option value="author">Yazar</option>
+                  </select>
+                </div>
+                
+                <div className="form-group">
+                  <label>Durum</label>
+                  <select 
+                    name="status" 
+                    value={formData.status}
+                    onChange={handleInputChange}
+                  >
+                    <option value="active">Aktif</option>
+                    <option value="passive">Pasif</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Telefon</label>
+                  <div className="phone-input">
+                    <span className="country-code">+90</span>
+                    <input 
+                      type="tel" 
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="5__ ___ __ __"
+                    />
+                  </div>
+                </div>
+                
+                <div className="form-group">
+                  <label>Şehir</label>
+                  <select 
+                    name="city" 
+                    value={formData.city}
+                    onChange={handleInputChange}
+                  >
+                    <option value="istanbul">İstanbul</option>
+                    <option value="ankara">Ankara</option>
+                    <option value="izmir">İzmir</option>
+                    <option value="antalya">Antalya</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="form-group">
+                <label>Profil Fotoğrafı</label>
+                <div className="file-upload">
+                  <input 
+                    type="file" 
+                    id="profile-photo" 
+                    accept="image/*"
+                    onChange={(e) => {
+                      setFormData(prev => ({
+                        ...prev,
+                        profilePhoto: e.target.files[0]
+                      }));
+                    }}
+                  />
+                  <label htmlFor="profile-photo">
+                    <span>Dosya Seç</span>
+                    {formData.profilePhoto ? (
+                      <span className="file-name">{formData.profilePhoto.name}</span>
+                    ) : (
+                      <span className="file-placeholder">Dosya seçilmedi</span>
+                    )}
+                  </label>
+                </div>
+              </div>
+              
+              <div className="form-actions">
+                <button 
+                  type="button" 
+                  className="btn-cancel"
+                  onClick={() => setIsOffcanvasOpen(false)}
+                >
+                  İptal
+                </button>
+                <button 
+                  type="submit" 
+                  className="btn-submit"
+                  disabled={passwordScore < 3}
+                >
+                  Kullanıcıyı Kaydet
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div 
+          className={`offcanvas-overlay ${isOffcanvasOpen ? 'active' : ''}`}
+          onClick={() => setIsOffcanvasOpen(false)}
+        />
       </div>
     </Layout>
-  )
+  );
 }
-
-export default Pages

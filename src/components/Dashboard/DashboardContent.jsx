@@ -21,9 +21,7 @@ const DashboardContent = () => {
             <path d="M9.25 9.25V4.75H10.75V9.25H15.25V10.75H10.75V15.25H9.25V10.75H4.75V9.25H9.25Z" fill="white"/>
           </svg>
           <span>Yeni İçerik</span>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 10.879L13.7125 7.1665L14.773 8.227L10 13L5.227 8.227L6.2875 7.1665L10 10.879Z" fill="white"/>
-          </svg>
+         
         </button>
       </div>
 
