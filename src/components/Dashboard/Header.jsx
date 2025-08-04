@@ -11,7 +11,7 @@ const Header = ({onToggle}) => {
               <path d="M3 6H21V8H3V6ZM3 11H21V13H3V11ZM3 16H21V18H3V16Z" fill="#414651"/>
             </svg>
           </button>
-          <div className="user-info">
+          <div className="user-info mt-5">
           <div className="avatar">
               <div className="avatar-image"></div>
               <div className="avatar-border"></div>
@@ -27,7 +27,7 @@ const Header = ({onToggle}) => {
           </div>
         </div>
 
-        <div className="header-controls mt-4">
+        <div className="header-controls mt-5">
           <div className="datetime-controls">
             <div className="datetime-info">
               <div className="date-info">
