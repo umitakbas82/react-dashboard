@@ -255,7 +255,177 @@ export default function UsersPage() {
 
   return (
     <>
-      <div className="fixed top-[90px] left-[265px] right-0 z-[5] bg-white px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+      {/* Offcanvas - Layout dışında render et */}
+      {/* Offcanvas Panel */}
+      <div className={`offcanvas-panel ${isOffcanvasOpen ? 'open' : ''}`}>
+        <div className="offcanvas-header">
+          <h2>Yeni Kullanıcı Ekle</h2>
+          <button className="close-btn" onClick={() => setIsOffcanvasOpen(false)}>
+            <X size={24} />
+          </button>
+        </div>
+        <div className="offcanvas-body">
+          <form onSubmit={handleSubmit}>
+            <div className="form-row">
+              <div className="form-group">
+                <label>Ad</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  placeholder="Adınızı girin"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Soyad</label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  placeholder="Soyadınızı girin"
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="form-group">
+              <label>E-posta</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="ornek@email.com"
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>Şifre</label>
+              <div className="password-input">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  placeholder="••••••••"
+                  required
+                />
+                <button 
+                  type="button" 
+                  className="toggle-password"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+              <div className="password-strength">
+                <div className="strength-bars">
+                  {[1, 2, 3, 4].map((i) => (
+                    <div 
+                      key={i} 
+                      className={`strength-bar ${i <= passwordScore ? 'active' : ''}`}
+                      style={{ '--bar-color': passwordScore >= 4 ? '#10B981' : passwordScore >= 2 ? '#F59E0B' : '#EF4444' }}
+                    />
+                  ))}
+                </div>
+                <div className="password-requirements">
+                  <p>Şifre en az 8 karakter uzunluğunda olmalı ve şunları içermelidir:</p>
+                  <ul>
+                    <li className={passwordChecks.hasUpperCase ? 'valid' : ''}>Büyük harf (A-Z)</li>
+                    <li className={passwordChecks.hasLowerCase ? 'valid' : ''}>Çüçük harf (a-z)</li>
+                    <li className={passwordChecks.hasNumbers ? 'valid' : ''}>Rakam (0-9)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <div className="form-row">
+              <div className="form-group">
+                <label>Rol</label>
+                <select 
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Rol seçin</option>
+                  <option value="admin">Yönetici</option>
+                  <option value="editor">Editör</option>
+                  <option value="viewer">Görüntüleyici</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Departman</label>
+                <select 
+                  name="department"
+                  value={formData.department}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Departman seçin</option>
+                  <option value="it">Bilgi İşlem</option>
+                  <option value="hr">İnsan Kaynakları</option>
+                  <option value="finance">Finans</option>
+                  <option value="marketing">Pazarlama</option>
+                </select>
+              </div>
+            </div>
+            
+            <div className="form-group">
+              <label>Profil Fotoğrafı</label>
+              <div className="file-upload">
+                <input 
+                  type="file" 
+                  id="profile-photo" 
+                  accept="image/*"
+                  onChange={(e) => {
+                    setFormData(prev => ({
+                      ...prev,
+                      profilePhoto: e.target.files[0]
+                    }));
+                  }}
+                />
+                <label htmlFor="profile-photo">
+                  <span>Dosya Seç</span>
+                  {formData.profilePhoto ? (
+                    <span className="file-name">{formData.profilePhoto.name}</span>
+                  ) : (
+                    <span className="file-placeholder">Dosya seçilmedi</span>
+                  )}
+                </label>
+              </div>
+            </div>
+            
+            <div className="form-actions">
+              <button 
+                type="button" 
+                className="btn-cancel"
+                onClick={() => setIsOffcanvasOpen(false)}
+              >
+                İptal
+              </button>
+              <button 
+                type="submit" 
+                className="btn-submit"
+                disabled={passwordScore < 3}
+              >
+                Kullanıcıyı Kaydet
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div 
+        className={`offcanvas-overlay ${isOffcanvasOpen ? 'active' : ''}`}
+        onClick={() => setIsOffcanvasOpen(false)}
+      />
+      
+      {/* Ana sayfa içeriği */}
+      <div className="fixed top-[90px] left-[265px] right-0 z-[5] bg-white px-6 py-2 border-b border-gray-200 flex justify-between items-center">
         <div className="flex-1">
           <h1 className="text-lg font-semibold text-gray-900 ms-3">Kullanıcılar</h1>
           <p className="text-sm text-gray-600 ms-3">Bu listede sisteminize kayıtlı kullanıcıların ad ve soyadlarını görüntüleyebilirsiniz. Kullanıcı profillerine tıklayarak detaylarını inceleyebilirsiniz.</p>
@@ -273,41 +443,39 @@ export default function UsersPage() {
  
       </div>
       
-      <div className="fixed top-[170px] left-[265px] right-0 bottom-0 z-[4] bg-white px-8 py-5 overflow-y-auto">
-            <div className="mb-6">
-              <div className="flex justify-between items-center gap-4">
-                <div className="relative flex-1 max-w-md">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+      <div className="fixed top-[125px] left-[265px] right-0 bottom-0 z-[4] bg-white px-8 py-5 overflow-y-auto">
+            <div className="mb-4">
+              <div className="flex justify-end items-center gap-3">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
                   <input
                     type="text"
                     placeholder="Arama..."
                     value={search}
                     onChange={handleSearch}
-                    className="w-full pl-10 pr-16 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className="w-64 pl-9 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                   />
                   <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">⌘T</span>
                 </div>
-                <div className="flex gap-2">
-                  <button 
-                    onClick={handleExport}
-                    className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    <Download size={16} /> Dışa Aktar
-                  </button>
-                  <button 
-                    onClick={() => handleFilter()}
-                    className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    <Filter size={16} /> Filtrele
-                  </button>
-                  <button 
-                    onClick={() => handleSort('name')}
-                    className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    <ArrowUpDown size={16} /> Sırala
-                  </button>
-                </div>
-              
+                <div className="h-6 w-px bg-gray-300"></div>
+                <button 
+                  onClick={handleExport}
+                  className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <Download size={16} /> Dışa Aktar
+                </button>
+                <button 
+                  onClick={() => handleFilter()}
+                  className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <Filter size={16} /> Filtrele
+                </button>
+                <button 
+                  onClick={() => handleSort('name')}
+                  className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                  <ArrowUpDown size={16} /> Sırala
+                </button>
               </div>
             </div>
 
@@ -420,185 +588,6 @@ export default function UsersPage() {
               </div>
             </div>
 
-            {/* Offcanvas Panel */}
-            <div className={`offcanvas-panel ${isOffcanvasOpen ? 'open' : ''}`}>
-              <div className="offcanvas-header">
-                <h2>Yeni Kullanıcı Ekle</h2>
-                <button className="close-btn" onClick={() => setIsOffcanvasOpen(false)}>
-                  <X size={24} />
-                </button>
-              </div>
-              <div className="offcanvas-body">
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <label>Ad Soyad</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      placeholder="Ad Soyad giriniz"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="form-group">
-                    <label>E-posta</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder="ornek@email.com"
-                      required
-                    />
-                  </div>
-                  
-                  <div className="form-group">
-                    <label>Şifre</label>
-                    <div className="password-input">
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        name="password"
-                        value={formData.password}
-                        onChange={handleInputChange}
-                        placeholder="••••••••"
-                        required
-                      />
-                      <button 
-                        type="button" 
-                        className="toggle-password"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                      </button>
-                    </div>
-                    <div className="password-strength">
-                      <div className="strength-bars">
-                        {[1, 2, 3, 4].map((i) => (
-                          <div 
-                            key={i} 
-                            className={`strength-bar ${i <= passwordScore ? 'active' : ''}`}
-                            style={{ '--bar-color': passwordScore >= 4 ? '#10B981' : passwordScore >= 2 ? '#F59E0B' : '#EF4444' }}
-                          />
-                        ))}
-                      </div>
-                      <div className="password-requirements">
-                        <p>Şifre en az 8 karakter uzunluğunda olmalı ve şunları içermelidir:</p>
-                        <ul>
-                          <li className={passwordChecks.hasUpperCase ? 'valid' : ''}>Büyük harf (A-Z)</li>
-                          <li className={passwordChecks.hasLowerCase ? 'valid' : ''}>Küçük harf (a-z)</li>
-                          <li className={passwordChecks.hasNumbers ? 'valid' : ''}>Rakam (0-9)</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label>Rol</label>
-                      <select 
-                        name="role" 
-                        value={formData.role}
-                        onChange={handleInputChange}
-                      >
-                        <option value="admin">Admin</option>
-                        <option value="editor">Editör</option>
-                        <option value="author">Yazar</option>
-                      </select>
-                    </div>
-                    
-                    <div className="form-group">
-                      <label>Durum</label>
-                      <select 
-                        name="status" 
-                        value={formData.status}
-                        onChange={handleInputChange}
-                      >
-                        <option value="active">Aktif</option>
-                        <option value="passive">Pasif</option>
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label>Telefon</label>
-                      <div className="phone-input">
-                        <span className="country-code">+90</span>
-                        <input 
-                          type="tel" 
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder="5__ ___ __ __"
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="form-group">
-                      <label>Şehir</label>
-                      <select 
-                        name="city" 
-                        value={formData.city}
-                        onChange={handleInputChange}
-                      >
-                        <option value="istanbul">İstanbul</option>
-                        <option value="ankara">Ankara</option>
-                        <option value="izmir">İzmir</option>
-                        <option value="antalya">Antalya</option>
-                      </select>
-                    </div>
-                  </div>
-                  
-                  <div className="form-group">
-                    <label>Profil Fotoğrafı</label>
-                    <div className="file-upload">
-                      <input 
-                        type="file" 
-                        id="profile-photo" 
-                        accept="image/*"
-                        onChange={(e) => {
-                          setFormData(prev => ({
-                            ...prev,
-                            profilePhoto: e.target.files[0]
-                          }));
-                        }}
-                      />
-                      <label htmlFor="profile-photo">
-                        <span>Dosya Seç</span>
-                        {formData.profilePhoto ? (
-                          <span className="file-name">{formData.profilePhoto.name}</span>
-                        ) : (
-                          <span className="file-placeholder">Dosya seçilmedi</span>
-                        )}
-                      </label>
-                    </div>
-                  </div>
-                  
-                  <div className="form-actions">
-                    <button 
-                      type="button" 
-                      className="btn-cancel"
-                      onClick={() => setIsOffcanvasOpen(false)}
-                    >
-                      İptal
-                    </button>
-                    <button 
-                      type="submit" 
-                      className="btn-submit"
-                      disabled={passwordScore < 3}
-                    >
-                      Kullanıcıyı Kaydet
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div 
-              className={`offcanvas-overlay ${isOffcanvasOpen ? 'active' : ''}`}
-              onClick={() => setIsOffcanvasOpen(false)}
-            />
           </div>
       
       <Layout>
