@@ -443,17 +443,17 @@ export default function UsersPage() {
  
       </div>
       
-      <div className="fixed top-[125px] left-[265px] right-0 bottom-0 z-[4] bg-white px-8 py-5 overflow-y-auto">
-            <div className="mb-4">
+      <div className="fixed top-[140px] left-[265px] right-0 bottom-0 z-[4] bg-white px-8 py-5 overflow-y-auto">
+            <div className="mb-4 me-3">
               <div className="flex justify-end items-center gap-3">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                  <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
                   <input
                     type="text"
                     placeholder="Arama..."
                     value={search}
                     onChange={handleSearch}
-                    className="w-64 pl-9 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className="w-64 pl-9 pr-12 py-2 border border-gray-300 rounded-lg focus:border-blue-500 text-sm"
                   />
                   <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">⌘T</span>
                 </div>
@@ -483,34 +483,34 @@ export default function UsersPage() {
               <table className="w-full">
                 <thead className="bg-gray-50">
                   <tr className="border-b border-gray-200">
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ad Soyad</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">E-posta</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kayıt Tarihi</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durumu</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Son İşlem</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500"></th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ad Soyad</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">E-posta</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kayıt Tarihi</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durumu</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Son İşlem</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500"></th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {currentUsers.map(row => (
                     <tr key={row.id} className="hover:bg-gray-50">
-                      <td className="px-4 py-4 whitespace-nowrap">
+                      <td className="px-3 py-3 whitespace-nowrap">
                         <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
                       </td>
-                      <td className="px-4 py-4 whitespace-nowrap">
+                      <td className="px-3 py-3 whitespace-nowrap">
                         <div className="flex items-center">
                           <img src={row.avatar} alt={row.name} className="h-8 w-8 rounded-full" />
                           <span className="ml-3 text-sm font-medium text-gray-900">{row.name}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{row.email}</td>
-                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{row.role}</td>
-                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{row.registerDate}</td>
-                      <td className="px-4 py-4 whitespace-nowrap">
+                      <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-500">{row.email}</td>
+                      <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-900">{row.role}</td>
+                      <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-500">{row.registerDate}</td>
+                      <td className="px-3 py-3 whitespace-nowrap">
                         <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${
                           row.status === 'Aktif' 
                             ? 'bg-green-100 text-green-800' 
@@ -524,8 +524,8 @@ export default function UsersPage() {
                           {row.status}
                         </span>
                       </td>
-                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{row.lastAction}</td>
-                      <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <td className="px-3 py-3 whitespace-nowrap text-sm text-gray-500">{row.lastAction}</td>
+                      <td className="px-3 py-3 whitespace-nowrap text-right text-sm font-medium">
                         <button className="text-gray-400 hover:text-gray-600 p-1 rounded">
                           <MoreVertical size={16} />
                         </button>
