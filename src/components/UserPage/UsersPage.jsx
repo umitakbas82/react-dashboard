@@ -115,6 +115,8 @@ export default function UsersPage() {
   const [sortDirection, setSortDirection] = useState("asc");
   const [isOffcanvasOpen, setIsOffcanvasOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(8); // Sayfa başına 8 kullanıcı
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -228,9 +230,41 @@ export default function UsersPage() {
   const passwordChecks = checkPasswordStrength(formData.password);
   const passwordScore = Object.values(passwordChecks).filter(Boolean).length;
 
+  // Pagination calculations
+  const totalItems = users.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentUsers = users.slice(startIndex, endIndex);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
-    <Layout>
-      <div className="content-header mb-4">
+    <>
+      <div className="content-header mb-4" style={{
+        position: 'fixed',
+        top: '80px',
+        left: '265px',
+        right: '0',
+        zIndex: 10,
+        backgroundColor: '#fff',
+        padding: '20px 30px',
+        borderBottom: '1px solid #e5e7eb'
+      }}>
         <div className="header-info">
           <div className="page-title">
             <h1>Kullanıcılar</h1>
@@ -244,251 +278,343 @@ export default function UsersPage() {
           <span>Yeni Kullanıcı Ekle</span>
         </button>
       </div>
-      <hr className="my-4" />
-      <div className="users-container">
-        <div className="users-header">
-          <div className="header-actions">
-            <div className="search-input-container">
-              <Search size={18} />
-              <input
-                type="text"
-                placeholder="Arama..."
-                value={search}
-                onChange={handleSearch}
-              />
-              <span className="search-shortcut">⌘T</span>
-            </div>
-            <button className="btn-export" onClick={handleExport}><Download size={16} /> Dışa Aktar</button>
-            <button className="btn-filter" onClick={() => handleFilter()}><Filter size={16} /> Filtrele</button>
-            <button className="btn-sort" onClick={() => handleSort('name')}><ArrowUpDown size={16} /> Sırala</button>
-          </div>
-        </div>
-
-        <div className="users-table-container">
-          <table className="users-table">
-            <thead>
-              <tr>
-                <th><input type="checkbox" className="form-checkbox" /></th>
-                <th>Ad Soyad</th>
-                <th>E-posta</th>
-                <th>Rol</th>
-                <th>Kayıt Tarihi</th>
-                <th>Durumu</th>
-                <th>Son İşlem</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map(row => (
-                <tr key={row.id}>
-                  <td><input type="checkbox" className="form-checkbox" /></td>
-                  <td className="user-cell">
-                    <div className="user-info">
-                      <img src={row.avatar} alt={row.name} className="user-avatar" />
-                      <span className="user-name">{row.name}</span>
-                    </div>
-                  </td>
-                  <td className="email-cell">{row.email}</td>
-                  <td className="role-cell">{row.role}</td>
-                  <td className="date-cell">{row.registerDate}</td>
-                  <td className="status-cell">
-                    <span className={`status-badge ${row.status === 'Aktif' ? 'status-aktif' : 'status-pasif'}`}>
-                      <span className="status-indicator"></span>
-                      {row.status}
-                    </span>
-                  </td>
-                  <td className="action-cell">{row.lastAction}</td>
-                  <td className="actions-cell">
-                    <button className="action-btn">
-                      <MoreVertical size={16} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Offcanvas Panel */}
-        <div className={`offcanvas-panel ${isOffcanvasOpen ? 'open' : ''}`}>
-          <div className="offcanvas-header">
-            <h2>Yeni Kullanıcı Ekle</h2>
-            <button className="close-btn" onClick={() => setIsOffcanvasOpen(false)}>
-              <X size={24} />
-            </button>
-          </div>
-          <div className="offcanvas-body">
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Ad Soyad</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Ad Soyad giriniz"
-                  required
-                />
-              </div>
-              
-              <div className="form-group">
-                <label>E-posta</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="ornek@email.com"
-                  required
-                />
-              </div>
-              
-              <div className="form-group">
-                <label>Şifre</label>
-                <div className="password-input">
+      
+      <div className="users-container" style={{
+        position: 'fixed',
+        top: '120px',
+        left: '265px',
+        right: '0',
+        bottom: '0',
+        zIndex: 5,
+        backgroundColor: '#fff',
+        padding: '20px 30px',
+        overflowY: 'auto'
+      }}>
+            <div className="users-header">
+              <div className="header-actions">
+                <div className="search-input-container">
+                  <Search size={18} />
                   <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    placeholder="••••••••"
-                    required
+                    type="text"
+                    placeholder="Arama..."
+                    value={search}
+                    onChange={handleSearch}
                   />
-                  <button 
-                    type="button" 
-                    className="toggle-password"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
+                  <span className="search-shortcut">⌘T</span>
                 </div>
-                <div className="password-strength">
-                  <div className="strength-bars">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div 
-                        key={i} 
-                        className={`strength-bar ${i <= passwordScore ? 'active' : ''}`}
-                        style={{ '--bar-color': passwordScore >= 4 ? '#10B981' : passwordScore >= 2 ? '#F59E0B' : '#EF4444' }}
-                      />
-                    ))}
-                  </div>
-                  <div className="password-requirements">
-                    <p>Şifre en az 8 karakter uzunluğunda olmalı ve şunları içermelidir:</p>
-                    <ul>
-                      <li className={passwordChecks.hasUpperCase ? 'valid' : ''}>Büyük harf (A-Z)</li>
-                      <li className={passwordChecks.hasLowerCase ? 'valid' : ''}>Küçük harf (a-z)</li>
-                      <li className={passwordChecks.hasNumbers ? 'valid' : ''}>Rakam (0-9)</li>
-                    </ul>
-                  </div>
-                </div>
+                <button className="btn-export" onClick={handleExport}><Download size={16} /> Dışa Aktar</button>
+                <button className="btn-filter" onClick={() => handleFilter()}><Filter size={16} /> Filtrele</button>
+                <button className="btn-sort" onClick={() => handleSort('name')}><ArrowUpDown size={16} /> Sırala</button>
+              </div>
+            </div>
+
+            <div className="users-table-container" style={{
+              border: '1px solid #e5e7eb',
+              borderRadius: '8px'
+            }}>
+              <table className="users-table">
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" className="form-checkbox" /></th>
+                    <th>Ad Soyad</th>
+                    <th>E-posta</th>
+                    <th>Rol</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>Durumu</th>
+                    <th>Son İşlem</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentUsers.map(row => (
+                    <tr key={row.id}>
+                      <td><input type="checkbox" className="form-checkbox" /></td>
+                      <td className="user-cell">
+                        <div className="user-info">
+                          <img src={row.avatar} alt={row.name} className="user-avatar" />
+                          <span className="user-name">{row.name}</span>
+                        </div>
+                      </td>
+                      <td className="email-cell">{row.email}</td>
+                      <td className="role-cell">{row.role}</td>
+                      <td className="date-cell">{row.registerDate}</td>
+                      <td className="status-cell">
+                        <span className={`status-badge ${row.status === 'Aktif' ? 'status-aktif' : 'status-pasif'}`}>
+                          <span className="status-indicator"></span>
+                          {row.status}
+                        </span>
+                      </td>
+                      <td className="action-cell">{row.lastAction}</td>
+                      <td className="actions-cell">
+                        <button className="action-btn">
+                          <MoreVertical size={16} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Pagination */}
+            <div className="pagination-container" style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginTop: '20px',
+              padding: '0 10px'
+            }}>
+              <div className="pagination-info">
+                <span style={{ color: '#6b7280', fontSize: '14px' }}>
+                  {startIndex + 1}-{Math.min(endIndex, totalItems)} / {totalItems} kullanıcı gösteriliyor
+                </span>
               </div>
               
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Rol</label>
-                  <select 
-                    name="role" 
-                    value={formData.role}
-                    onChange={handleInputChange}
-                  >
-                    <option value="admin">Admin</option>
-                    <option value="editor">Editör</option>
-                    <option value="author">Yazar</option>
-                  </select>
-                </div>
+              <div className="pagination-controls" style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <button 
+                  onClick={handlePrevPage}
+                  disabled={currentPage === 1}
+                  style={{
+                    padding: '8px 12px',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '6px',
+                    backgroundColor: currentPage === 1 ? '#f9fafb' : '#fff',
+                    color: currentPage === 1 ? '#9ca3af' : '#374151',
+                    cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
+                    fontSize: '14px'
+                  }}
+                >
+                  ‹
+                </button>
                 
-                <div className="form-group">
-                  <label>Durum</label>
-                  <select 
-                    name="status" 
-                    value={formData.status}
-                    onChange={handleInputChange}
-                  >
-                    <option value="active">Aktif</option>
-                    <option value="passive">Pasif</option>
-                  </select>
-                </div>
+                {[...Array(totalPages)].map((_, index) => {
+                  const page = index + 1;
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      style={{
+                        padding: '8px 12px',
+                        border: '1px solid #d1d5db',
+                        borderRadius: '6px',
+                        backgroundColor: currentPage === page ? '#3b82f6' : '#fff',
+                        color: currentPage === page ? '#fff' : '#374151',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        minWidth: '40px'
+                      }}
+                    >
+                      {page}
+                    </button>
+                  );
+                })}
+                
+                <button 
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}
+                  style={{
+                    padding: '8px 12px',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '6px',
+                    backgroundColor: currentPage === totalPages ? '#f9fafb' : '#fff',
+                    color: currentPage === totalPages ? '#9ca3af' : '#374151',
+                    cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
+                    fontSize: '14px'
+                  }}
+                >
+                  ›
+                </button>
               </div>
-              
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Telefon</label>
-                  <div className="phone-input">
-                    <span className="country-code">+90</span>
-                    <input 
-                      type="tel" 
-                      name="phone"
-                      value={formData.phone}
+            </div>
+
+            {/* Offcanvas Panel */}
+            <div className={`offcanvas-panel ${isOffcanvasOpen ? 'open' : ''}`}>
+              <div className="offcanvas-header">
+                <h2>Yeni Kullanıcı Ekle</h2>
+                <button className="close-btn" onClick={() => setIsOffcanvasOpen(false)}>
+                  <X size={24} />
+                </button>
+              </div>
+              <div className="offcanvas-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label>Ad Soyad</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
                       onChange={handleInputChange}
-                      placeholder="5__ ___ __ __"
+                      placeholder="Ad Soyad giriniz"
+                      required
                     />
                   </div>
-                </div>
-                
-                <div className="form-group">
-                  <label>Şehir</label>
-                  <select 
-                    name="city" 
-                    value={formData.city}
-                    onChange={handleInputChange}
-                  >
-                    <option value="istanbul">İstanbul</option>
-                    <option value="ankara">Ankara</option>
-                    <option value="izmir">İzmir</option>
-                    <option value="antalya">Antalya</option>
-                  </select>
-                </div>
+                  
+                  <div className="form-group">
+                    <label>E-posta</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="ornek@email.com"
+                      required
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Şifre</label>
+                    <div className="password-input">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        placeholder="••••••••"
+                        required
+                      />
+                      <button 
+                        type="button" 
+                        className="toggle-password"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                    </div>
+                    <div className="password-strength">
+                      <div className="strength-bars">
+                        {[1, 2, 3, 4].map((i) => (
+                          <div 
+                            key={i} 
+                            className={`strength-bar ${i <= passwordScore ? 'active' : ''}`}
+                            style={{ '--bar-color': passwordScore >= 4 ? '#10B981' : passwordScore >= 2 ? '#F59E0B' : '#EF4444' }}
+                          />
+                        ))}
+                      </div>
+                      <div className="password-requirements">
+                        <p>Şifre en az 8 karakter uzunluğunda olmalı ve şunları içermelidir:</p>
+                        <ul>
+                          <li className={passwordChecks.hasUpperCase ? 'valid' : ''}>Büyük harf (A-Z)</li>
+                          <li className={passwordChecks.hasLowerCase ? 'valid' : ''}>Küçük harf (a-z)</li>
+                          <li className={passwordChecks.hasNumbers ? 'valid' : ''}>Rakam (0-9)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>Rol</label>
+                      <select 
+                        name="role" 
+                        value={formData.role}
+                        onChange={handleInputChange}
+                      >
+                        <option value="admin">Admin</option>
+                        <option value="editor">Editör</option>
+                        <option value="author">Yazar</option>
+                      </select>
+                    </div>
+                    
+                    <div className="form-group">
+                      <label>Durum</label>
+                      <select 
+                        name="status" 
+                        value={formData.status}
+                        onChange={handleInputChange}
+                      >
+                        <option value="active">Aktif</option>
+                        <option value="passive">Pasif</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label>Telefon</label>
+                      <div className="phone-input">
+                        <span className="country-code">+90</span>
+                        <input 
+                          type="tel" 
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          placeholder="5__ ___ __ __"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="form-group">
+                      <label>Şehir</label>
+                      <select 
+                        name="city" 
+                        value={formData.city}
+                        onChange={handleInputChange}
+                      >
+                        <option value="istanbul">İstanbul</option>
+                        <option value="ankara">Ankara</option>
+                        <option value="izmir">İzmir</option>
+                        <option value="antalya">Antalya</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Profil Fotoğrafı</label>
+                    <div className="file-upload">
+                      <input 
+                        type="file" 
+                        id="profile-photo" 
+                        accept="image/*"
+                        onChange={(e) => {
+                          setFormData(prev => ({
+                            ...prev,
+                            profilePhoto: e.target.files[0]
+                          }));
+                        }}
+                      />
+                      <label htmlFor="profile-photo">
+                        <span>Dosya Seç</span>
+                        {formData.profilePhoto ? (
+                          <span className="file-name">{formData.profilePhoto.name}</span>
+                        ) : (
+                          <span className="file-placeholder">Dosya seçilmedi</span>
+                        )}
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div className="form-actions">
+                    <button 
+                      type="button" 
+                      className="btn-cancel"
+                      onClick={() => setIsOffcanvasOpen(false)}
+                    >
+                      İptal
+                    </button>
+                    <button 
+                      type="submit" 
+                      className="btn-submit"
+                      disabled={passwordScore < 3}
+                    >
+                      Kullanıcıyı Kaydet
+                    </button>
+                  </div>
+                </form>
               </div>
-              
-              <div className="form-group">
-                <label>Profil Fotoğrafı</label>
-                <div className="file-upload">
-                  <input 
-                    type="file" 
-                    id="profile-photo" 
-                    accept="image/*"
-                    onChange={(e) => {
-                      setFormData(prev => ({
-                        ...prev,
-                        profilePhoto: e.target.files[0]
-                      }));
-                    }}
-                  />
-                  <label htmlFor="profile-photo">
-                    <span>Dosya Seç</span>
-                    {formData.profilePhoto ? (
-                      <span className="file-name">{formData.profilePhoto.name}</span>
-                    ) : (
-                      <span className="file-placeholder">Dosya seçilmedi</span>
-                    )}
-                  </label>
-                </div>
-              </div>
-              
-              <div className="form-actions">
-                <button 
-                  type="button" 
-                  className="btn-cancel"
-                  onClick={() => setIsOffcanvasOpen(false)}
-                >
-                  İptal
-                </button>
-                <button 
-                  type="submit" 
-                  className="btn-submit"
-                  disabled={passwordScore < 3}
-                >
-                  Kullanıcıyı Kaydet
-                </button>
-              </div>
-            </form>
+            </div>
+            <div 
+              className={`offcanvas-overlay ${isOffcanvasOpen ? 'active' : ''}`}
+              onClick={() => setIsOffcanvasOpen(false)}
+            />
           </div>
-        </div>
-        <div 
-          className={`offcanvas-overlay ${isOffcanvasOpen ? 'active' : ''}`}
-          onClick={() => setIsOffcanvasOpen(false)}
-        />
-      </div>
-    </Layout>
+      
+      <Layout>
+        {/* Layout artık boş, tüm içerik yukarıda sabit konumda */}
+      </Layout>
+    </>
   );
 }
