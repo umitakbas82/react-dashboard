@@ -30,7 +30,7 @@ const data = [
     email: 'mehmet.demir@example.com',
     role: 'Kullanıcı',
     registerDate: '05/02/2024',
-    status: 'Pasif',
+    status: 'Askıya Alındı',
     lastAction: 'Oluşturuldu',
     avatar: 'https://i.pravatar.cc/150?u=3'
   },
@@ -50,7 +50,7 @@ const data = [
     email: 'mustafa.yildiz@example.com',
     role: 'Kullanıcı',
     registerDate: '28/02/2024',
-    status: 'Pasif',
+    status: 'Askıya Alındı',
     lastAction: 'Oluşturuldu',
     avatar: 'https://i.pravatar.cc/150?u=5'
   },
@@ -90,7 +90,7 @@ const data = [
     email: 'can.ozturk@example.com',
     role: 'Kullanıcı',
     registerDate: '30/03/2024',
-    status: 'Pasif',
+    status: 'Askıya Alındı',
     lastAction: 'Oluşturuldu',
     avatar: 'https://i.pravatar.cc/150?u=9'
   },
@@ -255,98 +255,110 @@ export default function UsersPage() {
 
   return (
     <>
-      <div className="content-header mb-4" style={{
-        position: 'fixed',
-        top: '80px',
-        left: '265px',
-        right: '0',
-        zIndex: 10,
-        backgroundColor: '#fff',
-        padding: '20px 30px',
-        borderBottom: '1px solid #e5e7eb'
-      }}>
-        <div className="header-info">
-          <div className="page-title">
-            <h1>Kullanıcılar</h1>
-            <p>Sistem kullanıcılarını yönetin, yeni kullanıcılar ekleyin ve mevcut kullanıcı bilgilerini güncelleyin.</p>
-          </div>
+      <div className="fixed top-[90px] left-[265px] right-0 z-[5] bg-white px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+        <div className="flex-1">
+          <h1 className="text-lg font-semibold text-gray-900 ms-3">Kullanıcılar</h1>
+          <p className="text-sm text-gray-600 ms-3">Bu listede sisteminize kayıtlı kullanıcıların ad ve soyadlarını görüntüleyebilirsiniz. Kullanıcı profillerine tıklayarak detaylarını inceleyebilirsiniz.</p>
         </div>
-        <button className="new-content-button" onClick={() => setIsOffcanvasOpen(true)}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        
+        <button 
+          onClick={() => setIsOffcanvasOpen(true)}
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md font-medium text-sm transition-colors me-3 rounded-xl"
+        >
+          <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9.25 9.25V4.75H10.75V9.25H15.25V10.75H10.75V15.25H9.25V10.75H4.75V9.25H9.25Z" fill="white"/>
           </svg>
-          <span>Yeni Kullanıcı Ekle</span>
+          Yeni Kullanıcı Ekle
         </button>
+ 
       </div>
       
-      <div className="users-container" style={{
-        position: 'fixed',
-        top: '120px',
-        left: '265px',
-        right: '0',
-        bottom: '0',
-        zIndex: 5,
-        backgroundColor: '#fff',
-        padding: '20px 30px',
-        overflowY: 'auto'
-      }}>
-            <div className="users-header">
-              <div className="header-actions">
-                <div className="search-input-container">
-                  <Search size={18} />
+      <div className="fixed top-[170px] left-[265px] right-0 bottom-0 z-[4] bg-white px-8 py-5 overflow-y-auto">
+            <div className="mb-6">
+              <div className="flex justify-between items-center gap-4">
+                <div className="relative flex-1 max-w-md">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                   <input
                     type="text"
                     placeholder="Arama..."
                     value={search}
                     onChange={handleSearch}
+                    className="w-full pl-10 pr-16 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                   />
-                  <span className="search-shortcut">⌘T</span>
+                  <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">⌘T</span>
                 </div>
-                <button className="btn-export" onClick={handleExport}><Download size={16} /> Dışa Aktar</button>
-                <button className="btn-filter" onClick={() => handleFilter()}><Filter size={16} /> Filtrele</button>
-                <button className="btn-sort" onClick={() => handleSort('name')}><ArrowUpDown size={16} /> Sırala</button>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={handleExport}
+                    className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <Download size={16} /> Dışa Aktar
+                  </button>
+                  <button 
+                    onClick={() => handleFilter()}
+                    className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <Filter size={16} /> Filtrele
+                  </button>
+                  <button 
+                    onClick={() => handleSort('name')}
+                    className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <ArrowUpDown size={16} /> Sırala
+                  </button>
+                </div>
+              
               </div>
             </div>
 
-            <div className="users-table-container" style={{
-              border: '1px solid #e5e7eb',
-              borderRadius: '8px'
-            }}>
-              <table className="users-table">
-                <thead>
-                  <tr>
-                    <th><input type="checkbox" className="form-checkbox" /></th>
-                    <th>Ad Soyad</th>
-                    <th>E-posta</th>
-                    <th>Rol</th>
-                    <th>Kayıt Tarihi</th>
-                    <th>Durumu</th>
-                    <th>Son İşlem</th>
-                    <th></th>
+            <div className="border border-gray-200 rounded-lg overflow-hidden">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr className="border-b border-gray-200">
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ad Soyad</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">E-posta</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kayıt Tarihi</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durumu</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Son İşlem</th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500"></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-white divide-y divide-gray-200">
                   {currentUsers.map(row => (
-                    <tr key={row.id}>
-                      <td><input type="checkbox" className="form-checkbox" /></td>
-                      <td className="user-cell">
-                        <div className="user-info">
-                          <img src={row.avatar} alt={row.name} className="user-avatar" />
-                          <span className="user-name">{row.name}</span>
+                    <tr key={row.id} className="hover:bg-gray-50">
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        <div className="flex items-center">
+                          <img src={row.avatar} alt={row.name} className="h-8 w-8 rounded-full" />
+                          <span className="ml-3 text-sm font-medium text-gray-900">{row.name}</span>
                         </div>
                       </td>
-                      <td className="email-cell">{row.email}</td>
-                      <td className="role-cell">{row.role}</td>
-                      <td className="date-cell">{row.registerDate}</td>
-                      <td className="status-cell">
-                        <span className={`status-badge ${row.status === 'Aktif' ? 'status-aktif' : 'status-pasif'}`}>
-                          <span className="status-indicator"></span>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{row.email}</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-900">{row.role}</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{row.registerDate}</td>
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium ${
+                          row.status === 'Aktif' 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-gray-100 text-gray-600'
+                        }`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            row.status === 'Aktif' 
+                              ? 'bg-green-500' 
+                              : 'bg-gray-400'
+                          }`}></span>
                           {row.status}
                         </span>
                       </td>
-                      <td className="action-cell">{row.lastAction}</td>
-                      <td className="actions-cell">
-                        <button className="action-btn">
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{row.lastAction}</td>
+                      <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button className="text-gray-400 hover:text-gray-600 p-1 rounded">
                           <MoreVertical size={16} />
                         </button>
                       </td>
@@ -357,36 +369,22 @@ export default function UsersPage() {
             </div>
 
             {/* Pagination */}
-            <div className="pagination-container" style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: '20px',
-              padding: '0 10px'
-            }}>
-              <div className="pagination-info">
-                <span style={{ color: '#6b7280', fontSize: '14px' }}>
+            <div className="flex justify-between items-center mt-6 px-2">
+              <div>
+                <span className="text-sm text-gray-500">
                   {startIndex + 1}-{Math.min(endIndex, totalItems)} / {totalItems} kullanıcı gösteriliyor
                 </span>
               </div>
               
-              <div className="pagination-controls" style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}>
+              <div className="flex items-center gap-2">
                 <button 
                   onClick={handlePrevPage}
                   disabled={currentPage === 1}
-                  style={{
-                    padding: '8px 12px',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '6px',
-                    backgroundColor: currentPage === 1 ? '#f9fafb' : '#fff',
-                    color: currentPage === 1 ? '#9ca3af' : '#374151',
-                    cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-                    fontSize: '14px'
-                  }}
+                  className={`px-3 py-2 text-sm border border-gray-300 rounded-md transition-colors ${
+                    currentPage === 1 
+                      ? 'bg-gray-50 text-gray-400 cursor-not-allowed' 
+                      : 'bg-white text-gray-700 hover:bg-gray-50 cursor-pointer'
+                  }`}
                 >
                   ‹
                 </button>
@@ -397,16 +395,11 @@ export default function UsersPage() {
                     <button
                       key={page}
                       onClick={() => handlePageChange(page)}
-                      style={{
-                        padding: '8px 12px',
-                        border: '1px solid #d1d5db',
-                        borderRadius: '6px',
-                        backgroundColor: currentPage === page ? '#3b82f6' : '#fff',
-                        color: currentPage === page ? '#fff' : '#374151',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        minWidth: '40px'
-                      }}
+                      className={`px-3 py-2 text-sm border rounded-md min-w-[40px] transition-colors ${
+                        currentPage === page 
+                          ? 'bg-blue-600 border-blue-600 text-white' 
+                          : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
+                      }`}
                     >
                       {page}
                     </button>
@@ -416,15 +409,11 @@ export default function UsersPage() {
                 <button 
                   onClick={handleNextPage}
                   disabled={currentPage === totalPages}
-                  style={{
-                    padding: '8px 12px',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '6px',
-                    backgroundColor: currentPage === totalPages ? '#f9fafb' : '#fff',
-                    color: currentPage === totalPages ? '#9ca3af' : '#374151',
-                    cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
-                    fontSize: '14px'
-                  }}
+                  className={`px-3 py-2 text-sm border border-gray-300 rounded-md transition-colors ${
+                    currentPage === totalPages 
+                      ? 'bg-gray-50 text-gray-400 cursor-not-allowed' 
+                      : 'bg-white text-gray-700 hover:bg-gray-50 cursor-pointer'
+                  }`}
                 >
                   ›
                 </button>

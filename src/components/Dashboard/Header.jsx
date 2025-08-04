@@ -27,7 +27,7 @@ const Header = ({onToggle}) => {
           </div>
         </div>
 
-        <div className="header-controls">
+        <div className="header-controls mt-4">
           <div className="datetime-controls">
             <div className="datetime-info">
               <div className="date-info">
