@@ -229,12 +229,12 @@ export default function UsersPage() {
           <svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9.25 9.25V4.75H10.75V9.25H15.25V10.75H10.75V15.25H9.25V10.75H4.75V9.25H9.25Z" fill="white"/>
           </svg>
-          Yeni Kullanıcı Ekle
+          Yeni Sayfa Ekle
         </button>
  
       </div>
       <hr className="my-4" />
-      <div className="users-container">
+      <div className="fixed top-[140px] left-[265px] right-0 bottom-0 z-[4] bg-white px-8 py-5 overflow-y-auto">
         <div className="users-header">
           <div className="header-actions">
             <div className="search-input-container">
