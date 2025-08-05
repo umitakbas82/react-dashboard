@@ -245,7 +245,7 @@ export default function UsersPage() {
                 value={search}
                 onChange={handleSearch}
               />
-              <span className="search-shortcut">⌘T</span>
+              <span className="search-shortcut">⌘1</span>
             </div>
             <button className="btn-export" onClick={handleExport}><Download size={16} /> Dışa Aktar</button>
             <button className="btn-filter" onClick={() => handleFilter()}><Filter size={16} /> Filtrele</button>

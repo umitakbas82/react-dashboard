@@ -486,12 +486,12 @@ export default function UsersPage() {
                     <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
                     </th>
-                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ad Soyad</th>
-                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">E-posta</th>
-                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rol</th>
-                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kayıt Tarihi</th>
-                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durumu</th>
-                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Son İşlem</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 tracking-wider">Ad Soyad</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 tracking-wider">E-posta</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500  tracking-wider">Rol</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 tracking-wider">Kayıt Tarihi</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500  tracking-wider">Durumu</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 tracking-wider">Son İşlem</th>
                     <th className="px-3 py-2 text-left text-xs font-medium text-gray-500"></th>
                   </tr>
                 </thead>
@@ -503,7 +503,7 @@ export default function UsersPage() {
                       </td>
                       <td className="px-3 py-3 whitespace-nowrap">
                         <div className="flex items-center">
-                          <img src={row.avatar} alt={row.name} className="h-8 w-8 rounded-full" />
+                          <img src={row.avatar} alt={row.name} className="h-8 w-8 rounded-full me-3" />
                           <span className="ml-3 text-sm font-medium text-gray-900">{row.name}</span>
                         </div>
                       </td>
